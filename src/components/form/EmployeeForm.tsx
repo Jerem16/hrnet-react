@@ -1,14 +1,22 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-import { FormData } from "../interface";
+import { FormData } from "../../interface";
 import InputField from "./InputField";
 import SelectField from "./SelectField";
-import { states, departments } from "../assets/data/dataOptions";
+import { states, departments } from "../../assets/data/dataOptions";
 //? REDUX */
 import { useDispatch } from "react-redux";
-import { addEmployee, Employee } from "../redux/store/employeeSlice"; // ✅ Correct
+import { addEmployee, Employee } from "../../redux/store/employeeSlice";
+import {
+    validateName,
+    validateBirthDate,
+    validateZipCode,
+    isNotEmpty,
+    validateStartDate,
+} from "../../utils/validationForm";
 
 const EmployeeForm: React.FC = () => {
-    
+    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
     const dispatch = useDispatch();
     const [formData, setFormData] = useState<FormData>({
         firstName: "",
@@ -17,9 +25,9 @@ const EmployeeForm: React.FC = () => {
         startDate: "",
         street: "",
         city: "",
-        state: "AL",
+        state: "",
         zipCode: "",
-        department: "Sales",
+        department: "",
     });
 
     const handleChange = (
@@ -40,14 +48,48 @@ const EmployeeForm: React.FC = () => {
     };
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        let validationErrors: { [key: string]: string } = {};
+
+        // Vérifications
+        validationErrors.firstName =
+            isNotEmpty(formData.firstName, "Prénom") ||
+            validateName(formData.firstName);
+        validationErrors.lastName =
+            isNotEmpty(formData.lastName, "Nom") ||
+            validateName(formData.lastName);
+        validationErrors.dateOfBirth =
+            isNotEmpty(formData.dateOfBirth, "Date de naissance") ||
+            validateBirthDate(formData.dateOfBirth);
+        validationErrors.startDate =
+            isNotEmpty(formData.startDate, "Date de début") ||
+            validateStartDate(formData.startDate, formData.dateOfBirth);
+        validationErrors.street = isNotEmpty(formData.street, "Rue");
+        validationErrors.city =
+            isNotEmpty(formData.city, "Ville") || validateName(formData.city);
+        validationErrors.state = isNotEmpty(formData.state, "État");
+        validationErrors.zipCode =
+            isNotEmpty(formData.zipCode, "Code postal") ||
+            validateZipCode(formData.zipCode);
+        validationErrors.department = isNotEmpty(
+            formData.department,
+            "Département"
+        );
+
+        setErrors(validationErrors);
+
+        // Vérifie s'il y a des erreurs
+        if (Object.values(validationErrors).some((error) => error !== "")) {
+            return;
+        }
+
+        // Formatage des données avant envoi
         const formattedData = {
             ...formData,
             firstName: capitalizeText(formData.firstName),
             lastName: capitalizeText(formData.lastName),
             city: capitalizeText(formData.city),
-            // dateOfBirth: formatDate(formData.dateOfBirth),
-            // startDate: formatDate(formData.startDate),
         };
+
         dispatch(addEmployee(formattedData as Employee));
         console.log("Employee Data:", formattedData);
     };
@@ -61,12 +103,14 @@ const EmployeeForm: React.FC = () => {
                     id="firstName"
                     value={formData.firstName}
                     onChange={handleChange}
+                    error={errors.firstName}
                 />
                 <InputField
                     label="Last Name"
                     id="lastName"
                     value={formData.lastName}
                     onChange={handleChange}
+                    error={errors.lastName}
                 />
                 <InputField
                     label="Date of Birth"
@@ -74,6 +118,7 @@ const EmployeeForm: React.FC = () => {
                     type="date"
                     value={formData.dateOfBirth}
                     onChange={handleChange}
+                    error={errors.dateOfBirth}
                 />
                 <InputField
                     label="Start Date"
@@ -81,6 +126,7 @@ const EmployeeForm: React.FC = () => {
                     type="date"
                     value={formData.startDate}
                     onChange={handleChange}
+                    error={errors.startDate}
                 />
 
                 <fieldset className="border p-4 rounded mb-4">
@@ -90,23 +136,26 @@ const EmployeeForm: React.FC = () => {
                         id="street"
                         value={formData.street}
                         onChange={handleChange}
+                        error={errors.street}
                     />
                     <InputField
                         label="City"
                         id="city"
                         value={formData.city}
                         onChange={handleChange}
+                        error={errors.city}
                     />
                     <SelectField
                         label="State"
                         id="state"
+                        placeholder="--"
                         options={states.map(({ name, abbreviation }) => ({
                             name,
                             value: abbreviation,
-                            abbreviation,
                         }))}
                         value={formData.state}
                         onChange={handleChange}
+                        error={errors.state}
                     />
                     <InputField
                         label="Zip Code"
@@ -114,18 +163,21 @@ const EmployeeForm: React.FC = () => {
                         type="number"
                         value={formData.zipCode}
                         onChange={handleChange}
+                        error={errors.zipCode}
                     />
                 </fieldset>
 
                 <SelectField
                     label="Department"
                     id="department"
+                    placeholder="--"
                     options={departments.map(({ name }) => ({
                         name,
                         value: name,
                     }))}
                     value={formData.department}
                     onChange={handleChange}
+                    error={errors.department}
                 />
 
                 <button

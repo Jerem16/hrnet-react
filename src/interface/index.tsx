@@ -30,6 +30,7 @@ export interface SelectFieldProps {
     id: keyof FormData;
     options: SelectOption[]; // 🔥 Accepte un tableau d'objets
     value: string;
+    placeholder: string;
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 

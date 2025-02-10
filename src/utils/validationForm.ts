@@ -1,5 +1,5 @@
 // Validation du nom (prénom ou nom de famille)
-export const validateName = (name) => {
+export const validateName = (name: string): string => {
     const regexNumber = /[0-9]/;
     if (!name || name.length < 2) {
         return "Minimum 2 caractères.";
@@ -10,9 +10,8 @@ export const validateName = (name) => {
     return "";
 };
 
-
 // Validation de l'adresse email
-export const validateEmail = (email) => {
+export const validateEmail = (email: string): string => {
     const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegExp.test(email)) {
         return "Please enter a valid email address.";
@@ -21,15 +20,20 @@ export const validateEmail = (email) => {
 };
 
 // Validation de la date de naissance
-export const validateBirthDate = (birthDate) => {
-    const currentDate = new Date();
-    const date = new Date(birthDate);
-
-    if (!birthDate) {
-        return "Birth date is required.";
+export const validateBirthDate = (dateStr: string): string => {
+    if (!dateStr) {
+        return "La date de naissance est requise.";
     }
 
-    const calculateAge = (birthDate, currentDate) => {
+    const currentDate = new Date();
+    const birthDate = new Date(dateStr);
+
+    // Vérifier si la date est invalide
+    if (isNaN(birthDate.getTime())) {
+        return "Date de naissance invalide.";
+    }
+
+    const calculateAge = (birthDate: Date, currentDate: Date): number => {
         const birthYear = birthDate.getFullYear();
         const currentYear = currentDate.getFullYear();
         let age = currentYear - birthYear;
@@ -46,12 +50,45 @@ export const validateBirthDate = (birthDate) => {
         return age;
     };
 
-    const age = calculateAge(date, currentDate);
-    if (age < 13) {
-        return "You must be at least 13 years old.";
+    const age = calculateAge(birthDate, currentDate);
+    if (age < 18) return "L'employé doit avoir 18 ans.";
+
+    return "";
+};
+// Validation de la date de début
+export const validateStartDate = (
+    startDateStr: string,
+    birthDateStr: string
+): string => {
+    if (!startDateStr) {
+        return "La date de début est requise.";
+    }
+    if (!birthDateStr) {
+        return "La date de naissance est requise.";
+    }
+
+    const startDate = new Date(startDateStr);
+    const birthDate = new Date(birthDateStr);
+
+    if (isNaN(startDate.getTime()) || isNaN(birthDate.getTime())) {
+        return "Date invalide.";
+    }
+
+    // Calcul de la date minimale de début (date de naissance + 18 ans)
+    const minStartDate = new Date(birthDate);
+    minStartDate.setFullYear(minStartDate.getFullYear() + 18);
+
+    if (startDate < minStartDate) {
+        return "L'employé doit avoir 18 ans.";
     }
 
     return "";
+};
+
+export const validateZipCode = (zip: string): string => {
+    return /^[0-9]{5}$/.test(zip)
+        ? ""
+        : "Le code postal doit être un nombre à 5 chiffres.";
 };
 
 // Validation des nombres (par exemple pour les tournois)
@@ -80,7 +117,7 @@ export const validateCheckbox = (isChecked) => {
 };
 
 // Validation du mot de passe
-export const validatePassword = (password) => {
+export const validatePassword = (password: string): string => {
     const passwordRegExp = /^[a-zA-Z0-9!@#$%^&*_-]{8,}$/;
     // Au moins 8 caractères avec des caractères spéciaux autorisés
     if (!password || !passwordRegExp.test(password)) {
@@ -90,7 +127,7 @@ export const validatePassword = (password) => {
 };
 
 // Validation des caractères alphanumériques pour le nom d'utilisateur
-export const isAlphanumeric = (str) => {
+export const isAlphanumeric = (str: string): string => {
     const alphanumericRegExp = /^[a-zA-Z0-9]*$/; // Seulement des lettres et chiffres
     if (!str || !alphanumericRegExp.test(str)) {
         return "User Name can only contain alphanumeric characters.";
@@ -99,9 +136,8 @@ export const isAlphanumeric = (str) => {
 };
 
 // Fonction générique pour vérifier si un champ est vide
-export const isNotEmpty = (value, fieldName = "Field") => {
-    if (!value || value.trim() === "") {
-        return `${fieldName} cannot be empty.`;
-    }
-    return ""; // Pas d'erreur
+export const isNotEmpty = (value: string, fieldName: string): string => {
+    return !value || value.trim() === ""
+        ? `${fieldName} ne doit pas être vide.`
+        : "";
 };

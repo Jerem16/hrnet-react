@@ -1,15 +1,20 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
-import { Employee } from "../redux/store/employeeSlice";
+import { RootState } from "../../redux/store";
+import { Employee } from "../../redux/store/employeeSlice";
 
-// import { employees as Employees } from "../assets/data/employees";
+import { employees as Employees } from "../../assets/data/employees";
 
 const EmployeeList: React.FC = () => {
-    const employees = useSelector((state: RootState) => state.employees);
+    // const employees = useSelector((state: RootState) => state.employees);
 
-    // const employees = Employees;
-
+    const employees = Employees;
+    const formatDate = (dateStr: string): string => {
+        if (!dateStr) return "";
+        const date = new Date(dateStr);
+        if (isNaN(date.getTime())) return dateStr; // Garde la valeur originale si invalide
+        return date.toLocaleDateString("fr-FR"); // Format jj/mm/aaaa
+    };
     return (
         <main className="mx-auto p-4 max-w-7xl border rounded shadow-md overflow-x-auto">
             <h2 className="text-xl font-bold mb-4 text-center">
@@ -71,13 +76,15 @@ const EmployeeList: React.FC = () => {
                                                 {employee.lastName}
                                             </td>
                                             <td className="border p-2 whitespace-nowrap">
-                                                {employee.startDate}
+                                                {formatDate(employee.startDate)}
                                             </td>
                                             <td className="border p-2 whitespace-nowrap">
                                                 {employee.department}
                                             </td>
                                             <td className="border p-2 whitespace-nowrap">
-                                                {employee.dateOfBirth}
+                                                {formatDate(
+                                                    employee.dateOfBirth
+                                                )}
                                             </td>
                                             <td className="border p-2 whitespace-nowrap">
                                                 {employee.street}

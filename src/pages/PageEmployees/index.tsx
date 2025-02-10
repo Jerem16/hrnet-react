@@ -1,4 +1,4 @@
-import EmployeeList from "../../components/EmployeeList";
+import EmployeeList from "../../components/tables/EmployeeList";
 import Header from "../../components/header/Header";
 
 function PageEmployees() {
