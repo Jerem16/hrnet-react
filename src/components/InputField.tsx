@@ -1,8 +1,15 @@
 import React from "react";
+import { InputFieldProps } from "../interface";
 
-const InputField = ({ label, id, type = "text", value, onChange }) => (
+const InputField: React.FC<InputFieldProps> = ({
+    label,
+    id,
+    type = "text",
+    value,
+    onChange,
+}) => (
     <div className="flex flex-col mb-4">
-        <label htmlFor={id} className="font-semibold">
+        <label htmlFor={id} className="font-semibold text-left mb-2 mt-1" >
             {label}
         </label>
         <input

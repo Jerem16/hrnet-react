@@ -1,81 +1,15 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
-
-interface FormData {
-    firstName: string;
-    lastName: string;
-    dateOfBirth: string;
-    startDate: string;
-    street: string;
-    city: string;
-    state: string;
-    zipCode: string;
-    department: string;
-}
-
-interface InputFieldProps {
-    label: string;
-    id: keyof FormData;
-    type?: string;
-    value: string;
-    onChange: (e: ChangeEvent<HTMLInputElement>) => void;
-}
-
-interface SelectFieldProps {
-    label: string;
-    id: keyof FormData;
-    options: string[];
-    value: string;
-    onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
-}
-
-const InputField: React.FC<InputFieldProps> = ({
-    label,
-    id,
-    type = "text",
-    value,
-    onChange,
-}) => (
-    <div className="flex flex-col mb-4">
-        <label htmlFor={id} className="font-semibold">
-            {label}
-        </label>
-        <input
-            type={type}
-            id={id}
-            value={value}
-            onChange={onChange}
-            className="border rounded p-2"
-        />
-    </div>
-);
-
-const SelectField: React.FC<SelectFieldProps> = ({
-    label,
-    id,
-    options,
-    value,
-    onChange,
-}) => (
-    <div className="flex flex-col mb-4">
-        <label htmlFor={id} className="font-semibold">
-            {label}
-        </label>
-        <select
-            id={id}
-            value={value}
-            onChange={onChange}
-            className="border rounded p-2"
-        >
-            {options.map((option) => (
-                <option key={option} value={option}>
-                    {option}
-                </option>
-            ))}
-        </select>
-    </div>
-);
+import { FormData } from "../interface";
+import InputField from "./InputField";
+import SelectField from "./SelectField";
+import { states, departments } from "../assets/data/dataOptions";
+//? REDUX */
+import { useDispatch } from "react-redux";
+import { addEmployee, Employee } from "../redux/store/employeeSlice"; // ✅ Correct
 
 const EmployeeForm: React.FC = () => {
+    
+    const dispatch = useDispatch();
     const [formData, setFormData] = useState<FormData>({
         firstName: "",
         lastName: "",
@@ -93,14 +27,33 @@ const EmployeeForm: React.FC = () => {
     ) => {
         setFormData({ ...formData, [e.target.id]: e.target.value });
     };
-
+    const capitalizeText = (text: string): string => {
+        return text
+            .toLowerCase() // Convertit tout en minuscules pour éviter les soucis
+            .split(" ") // Sépare chaque mot
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Met en majuscule la première lettre
+            .join(" "); // Reforme la phrase
+    };
+    const formatDate = (dateStr: string): string => {
+        const [year, month, day] = dateStr.split("-");
+        return `${month}/${day}/${year}`; // Convertit YYYY-MM-DD en MM/DD/YYYY
+    };
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        console.log("Employee Data:", formData);
+        const formattedData = {
+            ...formData,
+            firstName: capitalizeText(formData.firstName),
+            lastName: capitalizeText(formData.lastName),
+            city: capitalizeText(formData.city),
+            // dateOfBirth: formatDate(formData.dateOfBirth),
+            // startDate: formatDate(formData.startDate),
+        };
+        dispatch(addEmployee(formattedData as Employee));
+        console.log("Employee Data:", formattedData);
     };
 
     return (
-        <div className="container mx-auto p-4 max-w-lg border rounded shadow-md">
+        <main className="container mx-auto p-4 max-w-lg border rounded shadow-md">
             <h2 className="text-xl font-bold mb-4">Create Employee</h2>
             <form onSubmit={handleSubmit}>
                 <InputField
@@ -147,7 +100,11 @@ const EmployeeForm: React.FC = () => {
                     <SelectField
                         label="State"
                         id="state"
-                        options={["AL", "AK", "AZ", "CA", "NY"]}
+                        options={states.map(({ name, abbreviation }) => ({
+                            name,
+                            value: abbreviation,
+                            abbreviation,
+                        }))}
                         value={formData.state}
                         onChange={handleChange}
                     />
@@ -163,13 +120,10 @@ const EmployeeForm: React.FC = () => {
                 <SelectField
                     label="Department"
                     id="department"
-                    options={[
-                        "Sales",
-                        "Marketing",
-                        "Engineering",
-                        "HR",
-                        "Legal",
-                    ]}
+                    options={departments.map(({ name }) => ({
+                        name,
+                        value: name,
+                    }))}
                     value={formData.department}
                     onChange={handleChange}
                 />
@@ -181,7 +135,7 @@ const EmployeeForm: React.FC = () => {
                     Save
                 </button>
             </form>
-        </div>
+        </main>
     );
 };
 

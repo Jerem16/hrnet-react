@@ -1,8 +1,15 @@
 import React from "react";
+import { SelectFieldProps } from "../interface";
 
-const SelectField = ({ label, id, options, value, onChange }) => (
+const SelectField: React.FC<SelectFieldProps> = ({
+    label,
+    id,
+    options,
+    value,
+    onChange,
+}) => (
     <div className="flex flex-col mb-4">
-        <label htmlFor={id} className="font-semibold">
+        <label htmlFor={id} className="font-semibold text-left mb-2 mt-1">
             {label}
         </label>
         <select
@@ -12,12 +19,11 @@ const SelectField = ({ label, id, options, value, onChange }) => (
             className="border rounded p-2"
         >
             {options.map((option) => (
-                <option key={option} value={option}>
-                    {option}
+                <option key={option.value} value={option.value}>
+                    {option.name}
                 </option>
             ))}
         </select>
     </div>
 );
-
 export default SelectField;

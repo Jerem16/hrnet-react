@@ -1,6 +1,6 @@
-import React, { useState, ChangeEvent, FormEvent } from "react";
+import { ChangeEvent } from "react";
 
-interface FormData {
+export interface FormData {
     firstName: string;
     lastName: string;
     dateOfBirth: string;
@@ -12,17 +12,25 @@ interface FormData {
     department: string;
 }
 
-interface InputFieldProps {
+export interface InputFieldProps {
     label: string;
     id: keyof FormData;
     type?: string;
     value: string;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
-interface SelectFieldProps {
+export interface SelectOption {
+    name: string;
+    value: string;
+    abbreviation?: string;
+}
+
+export interface SelectFieldProps {
     label: string;
     id: keyof FormData;
-    options: string[];
+    options: SelectOption[]; // 🔥 Accepte un tableau d'objets
     value: string;
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
+
+// data
