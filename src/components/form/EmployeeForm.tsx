@@ -90,6 +90,7 @@ const EmployeeForm: React.FC = () => {
             ...formData,
             firstName: capitalizeText(formData.firstName),
             lastName: capitalizeText(formData.lastName),
+            street: capitalizeText(formData.street),
             city: capitalizeText(formData.city),
         };
 
