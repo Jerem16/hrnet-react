@@ -16,7 +16,9 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
 }
-
+.modal-inner_content {
+    padding: 20px !important;
+}
 a {
     font-weight: 500;
     color: #646cff;

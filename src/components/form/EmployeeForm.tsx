@@ -13,8 +13,11 @@ import {
     isNotEmpty,
     validateStartDate,
 } from "../../utils/validationForm";
+//? NPM MODAL */
+import Modal from "react-modal-component-by-jeremy";
 
 const EmployeeForm: React.FC = () => {
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
     const dispatch = useDispatch();
@@ -91,6 +94,18 @@ const EmployeeForm: React.FC = () => {
         };
 
         dispatch(addEmployee(formattedData as Employee));
+        setIsModalOpen(true);
+        setFormData({
+            firstName: "",
+            lastName: "",
+            dateOfBirth: "",
+            startDate: "",
+            street: "",
+            city: "",
+            state: "",
+            zipCode: "",
+            department: "",
+        });
         console.log("Employee Data:", formattedData);
     };
 
@@ -187,6 +202,15 @@ const EmployeeForm: React.FC = () => {
                     Save
                 </button>
             </form>
+            {/* Modal de confirmation */}
+            <Modal
+                isOpen={isModalOpen}
+                onClose={() => setIsModalOpen(false)}
+                title="Succès"
+                type="success"
+            >
+                <p>L’employé a été ajouté avec succès.</p>
+            </Modal>
         </main>
     );
 };
