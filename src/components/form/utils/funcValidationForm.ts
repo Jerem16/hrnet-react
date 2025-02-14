@@ -85,14 +85,18 @@ export const validateStartDate = (
     return "";
 };
 
-export const validateZipCode = (zip: string): string => {
+export const validateZipCode = (zip: string, fieldName: string): string => {
+    const regexNumber = /[0-9]/;
+    if (!zip) {
+        return `${fieldName} ne doit pas être vide.`;
+    }
     return /^[0-9]{5}$/.test(zip)
         ? ""
-        : "Le code postal doit être un nombre à 5 chiffres.";
+        : "Le code postal doit contenir 5 chiffres.";
 };
 
 // Validation des nombres (par exemple pour les tournois)
-export const validateNumberInput = (value, min = 0, max = 99) => {
+export const validateNumberInput = (value: number, min = 0, max = 99) => {
     if (!value || isNaN(value) || value < min || value > max) {
         return `Value must be a number between ${min} and ${max}.`;
     }
@@ -137,7 +141,7 @@ export const isAlphanumeric = (str: string): string => {
 
 // Fonction générique pour vérifier si un champ est vide
 export const isNotEmpty = (value: string, fieldName: string): string => {
-    return !value || value.trim() === ""
+    return !value || value.length < 2
         ? `${fieldName} ne doit pas être vide.`
         : "";
 };

@@ -1,91 +1,45 @@
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import PersonalInfoForm from "./fieldset/PersonalInfoForm";
+import AddressForm from "./fieldset/AddressForm";
+import DepartmentForm from "./fieldset/DepartmentForm";
+import {
+    initialFormData,
+    validateForm,
+    validateEachInput,
+    capitalizeText,
+} from "./utils/validateForm";
 import { FormData } from "../../interface";
-import InputField from "./InputField";
-import SelectField from "./SelectField";
-import { states, departments } from "../../assets/data/dataOptions";
 //? REDUX */
 import { useDispatch } from "react-redux";
 import { addEmployee, Employee } from "../../redux/store/employeeSlice";
-import {
-    validateName,
-    validateBirthDate,
-    validateZipCode,
-    isNotEmpty,
-    validateStartDate,
-} from "../../utils/validationForm";
 //? NPM MODAL */
 import Modal from "react-modal-component-by-jeremy";
 
 const EmployeeForm: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
-
+    const [formData, setFormData] = useState<FormData>(initialFormData);
     const dispatch = useDispatch();
-    const [formData, setFormData] = useState<FormData>({
-        firstName: "",
-        lastName: "",
-        dateOfBirth: "",
-        startDate: "",
-        street: "",
-        city: "",
-        state: "",
-        zipCode: "",
-        department: "",
-    });
 
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
-        setFormData({ ...formData, [e.target.id]: e.target.value });
+        const { id, value } = e.target;
+        setFormData({ ...formData, [id]: value });
+
+        let error = validateEachInput(e, formData);
+
+        setErrors({ ...errors, [id]: error });
     };
-    const capitalizeText = (text: string): string => {
-        return text
-            .toLowerCase() // Convertit tout en minuscules pour éviter les soucis
-            .split(" ") // Sépare chaque mot
-            .map((word) => word.charAt(0).toUpperCase() + word.slice(1)) // Met en majuscule la première lettre
-            .join(" "); // Reforme la phrase
-    };
-    const formatDate = (dateStr: string): string => {
-        const [year, month, day] = dateStr.split("-");
-        return `${month}/${day}/${year}`; // Convertit YYYY-MM-DD en MM/DD/YYYY
-    };
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
-        let validationErrors: { [key: string]: string } = {};
-
-        // Vérifications
-        validationErrors.firstName =
-            isNotEmpty(formData.firstName, "Prénom") ||
-            validateName(formData.firstName);
-        validationErrors.lastName =
-            isNotEmpty(formData.lastName, "Nom") ||
-            validateName(formData.lastName);
-        validationErrors.dateOfBirth =
-            isNotEmpty(formData.dateOfBirth, "Date de naissance") ||
-            validateBirthDate(formData.dateOfBirth);
-        validationErrors.startDate =
-            isNotEmpty(formData.startDate, "Date de début") ||
-            validateStartDate(formData.startDate, formData.dateOfBirth);
-        validationErrors.street = isNotEmpty(formData.street, "Rue");
-        validationErrors.city =
-            isNotEmpty(formData.city, "Ville") || validateName(formData.city);
-        validationErrors.state = isNotEmpty(formData.state, "État");
-        validationErrors.zipCode =
-            isNotEmpty(formData.zipCode, "Code postal") ||
-            validateZipCode(formData.zipCode);
-        validationErrors.department = isNotEmpty(
-            formData.department,
-            "Département"
-        );
-
+        const validationErrors = validateForm(formData);
         setErrors(validationErrors);
 
-        // Vérifie s'il y a des erreurs
-        if (Object.values(validationErrors).some((error) => error !== "")) {
+        if (Object.values(validationErrors).some((error) => error !== ""))
             return;
-        }
 
-        // Formatage des données avant envoi
         const formattedData = {
             ...formData,
             firstName: capitalizeText(formData.firstName),
@@ -96,104 +50,27 @@ const EmployeeForm: React.FC = () => {
 
         dispatch(addEmployee(formattedData as Employee));
         setIsModalOpen(true);
-        setFormData({
-            firstName: "",
-            lastName: "",
-            dateOfBirth: "",
-            startDate: "",
-            street: "",
-            city: "",
-            state: "",
-            zipCode: "",
-            department: "",
-        });
-        console.log("Employee Data:", formattedData);
+        setFormData(initialFormData);
+        setErrors({});
     };
-
     return (
         <main className="container mx-auto p-4 max-w-lg border rounded shadow-md">
             <h2 className="text-xl font-bold mb-4">Create Employee</h2>
             <form onSubmit={handleSubmit}>
-                <InputField
-                    label="First Name"
-                    id="firstName"
-                    value={formData.firstName}
+                <PersonalInfoForm
+                    formData={formData}
+                    errors={errors}
                     onChange={handleChange}
-                    error={errors.firstName}
                 />
-                <InputField
-                    label="Last Name"
-                    id="lastName"
-                    value={formData.lastName}
+                <AddressForm
+                    formData={formData}
+                    errors={errors}
                     onChange={handleChange}
-                    error={errors.lastName}
                 />
-                <InputField
-                    label="Date of Birth"
-                    id="dateOfBirth"
-                    type="date"
-                    value={formData.dateOfBirth}
-                    onChange={handleChange}
-                    error={errors.dateOfBirth}
-                />
-                <InputField
-                    label="Start Date"
-                    id="startDate"
-                    type="date"
-                    value={formData.startDate}
-                    onChange={handleChange}
-                    error={errors.startDate}
-                />
-
-                <fieldset className="border p-4 rounded mb-4">
-                    <legend className="font-semibold">Address</legend>
-                    <InputField
-                        label="Street"
-                        id="street"
-                        value={formData.street}
-                        onChange={handleChange}
-                        error={errors.street}
-                    />
-                    <InputField
-                        label="City"
-                        id="city"
-                        value={formData.city}
-                        onChange={handleChange}
-                        error={errors.city}
-                    />
-                    <SelectField
-                        label="State"
-                        id="state"
-                        placeholder="--"
-                        options={states.map(({ name, abbreviation }) => ({
-                            name,
-                            value: abbreviation,
-                        }))}
-                        value={formData.state}
-                        onChange={handleChange}
-                        error={errors.state}
-                    />
-                    <InputField
-                        label="Zip Code"
-                        id="zipCode"
-                        type="number"
-                        value={formData.zipCode}
-                        onChange={handleChange}
-                        error={errors.zipCode}
-                    />
-                </fieldset>
-
-                <SelectField
-                    label="Department"
-                    id="department"
-                    placeholder="--"
-                    options={departments.map(({ name }) => ({
-                        name,
-                        value: name,
-                    }))}
-                    value={formData.department}
-                    onChange={handleChange}
+                <DepartmentForm
+                    department={formData.department}
                     error={errors.department}
+                    onChange={handleChange}
                 />
 
                 <button
@@ -203,12 +80,12 @@ const EmployeeForm: React.FC = () => {
                     Save
                 </button>
             </form>
-            {/* Modal de confirmation */}
             <Modal
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 title="Succès"
-                type="success"
+                type="info"
+                // Type de modale ("success", "error", "info").
             >
                 <p>L’employé a été ajouté avec succès.</p>
             </Modal>

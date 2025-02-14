@@ -9,5 +9,23 @@
     align-items: center;
 }
 main {
-    margin-top: 80px !important; 
+    margin-top: 80px !important;
+}
+.border-green-500 {
+    background-color: transparent !important;
+    border: 1.5px solid #28a745;
+    background-image: url("../../public/svg/CheckedIcon.svg");
+    background-size: 20px;
+    background-repeat: no-repeat;
+    padding-right: calc(20px + 1rem);
+    background-position: right 0.5rem center;
+}
+
+input:-webkit-autofill {
+    background-color: initial !important;
+    background-image: none !important;
+    background-size: 0;
+    background-repeat: no-repeat;
+    padding-right: 0.5rem;
+    background-position: right 0.5rem center;
 }

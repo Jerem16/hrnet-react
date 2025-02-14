@@ -15,8 +15,10 @@ export interface FormData {
 export interface InputFieldProps {
     label: string;
     id: keyof FormData;
+    error?: string;
     type?: string;
     value: string;
+    minLength: number;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 export interface SelectOption {

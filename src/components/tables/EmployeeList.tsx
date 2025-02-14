@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Employee } from "../../redux/store/employeeSlice";
-import { employees as Employees } from "../../assets/data/employees";
+// import { employees as Employees } from "../../assets/data/employees";
 
 const EmployeeList: React.FC = () => {
-    // const employees = useSelector((state: RootState) => state.employees);
-    const employees = Employees;
+    const employees = useSelector((state: RootState) => state.employees);
+    // const employees = Employees;
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(10);
     const [currentPage, setCurrentPage] = useState(1);
@@ -14,13 +14,8 @@ const EmployeeList: React.FC = () => {
     const [sortColumn, setSortColumn] = useState<keyof Employee | null>(null);
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
     const parseDate = (dateStr: string): Date | null => {
-        const parts = dateStr.split("/");
-        if (parts.length !== 3) return null; // Vérification basique du format
-
-        const [month, day, year] = parts.map(Number); // Convertit les valeurs en nombres
-        if (!month || !day || !year) return null; // Vérification supplémentaire
-
-        return new Date(year, month - 1, day); // Mois commence à 0 en JS
+        const date = new Date(dateStr);
+        return isNaN(date.getTime()) ? null : date;
     };
 
     // Fonction de tri dynamique

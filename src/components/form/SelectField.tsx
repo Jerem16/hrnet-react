@@ -21,7 +21,6 @@ const SelectField: React.FC<SelectFieldProps & { error?: string }> = ({
             className={`border rounded p-2 ${error ? "border-red-500" : ""}`}
         >
             {placeholder && <option value="">{placeholder}</option>}{" "}
-            {/* Suppression de `selected` */}
             {options.map((option) => (
                 <option key={option.value} value={option.value}>
                     {option.name}
