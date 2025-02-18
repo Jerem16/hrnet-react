@@ -1,22 +1,33 @@
 import React from "react";
 import SelectField from "../SelectField";
+import InputField from "../InputField";
 import { departments } from "../../../assets/data/dataOptions";
 import { capitalizeText } from "../utils/validateForm";
 
 interface DepartmentFormProps {
+    formData: {
+        startDate: string;
+        dateOfBirth: string;
+    };
     department: string;
     error: string;
-    onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
+    errors: { [key: string]: string };
+    onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => void;
+    disabled?: boolean; // ✅ Désormais optionnel
 }
 
 const DepartmentForm: React.FC<DepartmentFormProps> = ({
+    formData,
     department,
     error,
+    errors,
     onChange,
 }) => {
     return (
-        <fieldset className="border p-4 rounded mb-4">
-            <legend className="font-semibold">Department</legend>
+        <fieldset className="form-section">
+            <legend className="form-label">Professional Information</legend>
             <SelectField
                 label="Department"
                 id="department"
@@ -25,6 +36,16 @@ const DepartmentForm: React.FC<DepartmentFormProps> = ({
                 value={capitalizeText(department)}
                 onChange={onChange}
                 error={error}
+            />
+            <InputField
+                label="Start Date"
+                id="startDate"
+                type="date"
+                value={formData.startDate}
+                onChange={onChange}
+                minLength={10}
+                error={errors.startDate}
+                disabled={!formData.dateOfBirth}
             />
         </fieldset>
     );

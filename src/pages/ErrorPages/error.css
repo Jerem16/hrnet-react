@@ -1,0 +1,39 @@
+.error-404,
+.error-404 .borderError {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.error-404 {
+    flex: 1;
+    color: #fff;
+    background-color: #12002b;
+    text-align: center;
+}
+.error-404 .borderError {
+    min-width: 50%;
+    min-height: 50vh;
+    padding: 20px;
+}
+.error-404 .borderError .error-404_h1 {
+    font-size: 25vw;
+    color: #00bb78;
+    border: 1px solid #00bb78;
+    padding: 0 20px;
+    min-width: 730px;
+    margin: 20px;
+}
+.error-404 .borderError .error-404_p {
+    font-size: 1.4rem;
+}
+.error-404 .borderError .error-404_p span {
+    font-weight: 700;
+}
+.error-404 .borderError .error-404_a {
+    text-decoration: underline;
+    color: #00bb78;
+    display: block;
+    margin-top: 15px;
+    font-size: 1.4rem;
+}

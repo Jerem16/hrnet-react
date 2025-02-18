@@ -28,8 +28,8 @@ const EmployeeTable: React.FC<EmployeeTableProps> = ({
     };
 
     return (
-        <div className="overflow-x-auto">
-            <table className="min-w-[1080px] w-full border-collapse border border-gray-300 mt-2">
+        <div className="table-container">
+            <table className="employee-table">
                 <TableHeader
                     sortColumn={sortColumn}
                     sortOrder={sortOrder}

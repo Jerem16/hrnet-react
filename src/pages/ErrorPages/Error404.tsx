@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./error.scss";
+import "./error.css";
 
 function Error404() {
     const navigate = useNavigate();

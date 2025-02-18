@@ -9,28 +9,30 @@ const SelectField: React.FC<SelectFieldProps & { error?: string }> = ({
     onChange,
     error,
     placeholder, // Ajout de la prop placeholder
-}) => (
-    <div className="flex flex-col mb-4">
-        <label htmlFor={id} className="font-semibold text-left mb-2 mt-1">
-            {label} {error && <span className="text-red-500">*</span>}
-        </label>
-        <select
-            id={id}
-            value={value || ""}
-            onChange={onChange}
-            className={`border rounded p-2 ${error ? "border-red-500" : ""}`}
-        >
-            {placeholder && <option value="">{placeholder}</option>}{" "}
-            {options.map((option) => (
-                <option key={option.value} value={option.value}>
-                    {option.name}
-                </option>
-            ))}
-        </select>
-        {error && (
-            <p className="text-red-500 text-sm mt-1 text-left">{error}</p>
-        )}
-    </div>
-);
-
+}) => {
+    const isValid = error === "";
+    return (
+        <div className="field-container">
+            <label htmlFor={id} className="field-label">
+                {label} {error && <span className="error-indicator">*</span>}
+            </label>
+            <select
+                id={id}
+                value={value || ""}
+                onChange={onChange}
+                className={`select-field ${isValid ? "ok" : ""} ${
+                    error ? "error" : ""
+                }`}
+            >
+                {placeholder && <option value="">{placeholder}</option>}
+                {options.map((option) => (
+                    <option key={option.value} value={option.value}>
+                        {option.name}
+                    </option>
+                ))}
+            </select>
+            {error && <p className="select-field-error">{error}</p>}
+        </div>
+    );
+};
 export default SelectField;

@@ -19,8 +19,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
     onChange,
 }) => {
     return (
-        <fieldset className="border p-4 rounded mb-4">
-            <legend className="font-semibold">Personal Information</legend>
+        <fieldset className="form-section">
+            <legend className="form-label">Personal Information</legend>
             <InputField
                 label="First Name"
                 id="firstName"
@@ -47,15 +47,6 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = ({
                 onChange={onChange}
                 minLength={10}
                 error={errors.dateOfBirth}
-            />
-            <InputField
-                label="Start Date"
-                id="startDate"
-                type="date"
-                value={formData.startDate}
-                onChange={onChange}
-                minLength={10}
-                error={errors.startDate}
             />
         </fieldset>
     );

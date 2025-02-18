@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/store";
 import { Employee } from "../../redux/store/employeeSlice";
@@ -12,10 +12,12 @@ import {
     paginateEmployees,
     getTotalPages,
 } from "./utils/employees";
+import Modal from "react-modal-component-by-jeremy";
 
 const EmployeeList: React.FC = () => {
     // const employees = useSelector((state: RootState) => state.employees);
     const employees = Employees;
+    const [isModalOpen, setIsModalOpen] = useState(true);
 
     const [searchTerm, setSearchTerm] = useState("");
     const [itemsPerPage, setItemsPerPage] = useState(10);
@@ -31,36 +33,49 @@ const EmployeeList: React.FC = () => {
         itemsPerPage
     );
     const totalPages = getTotalPages(filteredEmployees, itemsPerPage);
+    useEffect(() => {
+        if (filteredEmployees.length <= itemsPerPage) {
+            setCurrentPage(1);
+        }
+    }, [itemsPerPage, filteredEmployees.length]);
 
     return (
-        <main className="mx-auto p-4 max-w-7xl rounded shadow-md overflow-x-auto bg-gray-800">
-            <h2 className="text-xl font-bold mb-4 text-center">
-                Current Employees
-            </h2>
-            <SearchAndFilter
-                searchTerm={searchTerm}
-                setSearchTerm={setSearchTerm}
-                itemsPerPage={itemsPerPage}
-                setItemsPerPage={setItemsPerPage}
-            />
-            {employees.length === 0 ? (
-                <p className="text-center text-gray-600">
-                    No employees added yet.
-                </p>
-            ) : (
-                <EmployeeTable
-                    employees={paginatedEmployees}
-                    sortColumn={sortColumn}
-                    sortOrder={sortOrder}
-                    setSortColumn={setSortColumn}
-                    setSortOrder={setSortOrder}
+        <main className="main-container">
+            <h2 className="main-heading">Current Employees</h2>
+            <div className="bg">
+                <SearchAndFilter
+                    searchTerm={searchTerm}
+                    setSearchTerm={setSearchTerm}
+                    itemsPerPage={itemsPerPage}
+                    setItemsPerPage={setItemsPerPage}
                 />
-            )}
-            <Pagination
-                currentPage={currentPage}
-                totalPages={totalPages}
-                onPageChange={setCurrentPage}
-            />
+                {employees.length === 0 ? (
+                    <>
+                        <Modal
+                            isOpen={isModalOpen}
+                            onClose={() => setIsModalOpen(false)}
+                            title="Sorry"
+                            type="info"
+                        >
+                            <p>No employees added yet.</p>
+                        </Modal>
+                        <p className="empty-message">No employees added yet.</p>
+                    </>
+                ) : (
+                    <EmployeeTable
+                        employees={paginatedEmployees}
+                        sortColumn={sortColumn}
+                        sortOrder={sortOrder}
+                        setSortColumn={setSortColumn}
+                        setSortOrder={setSortOrder}
+                    />
+                )}
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={setCurrentPage}
+                />
+            </div>
         </main>
     );
 };

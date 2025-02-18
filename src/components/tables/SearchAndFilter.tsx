@@ -1,4 +1,7 @@
 import React from "react";
+import InputField from "../form/InputField";
+import SelectField from "../form/SelectField";
+import { seize } from "../../assets/data/dataOptions";
 
 interface SearchAndFilterProps {
     searchTerm: string;
@@ -6,7 +9,7 @@ interface SearchAndFilterProps {
     itemsPerPage: number;
     setItemsPerPage: (count: number) => void;
 }
-
+// const seize = {[ name:"10", name:"25", name:"100"]};
 const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     searchTerm,
     setSearchTerm,
@@ -14,34 +17,22 @@ const SearchAndFilter: React.FC<SearchAndFilterProps> = ({
     setItemsPerPage,
 }) => {
     return (
-        <div className="min-w-[470px] mb-4 flex justify-between">
-            <label htmlFor="pages-nb-selector">
-                Show:
-                <select
-                    id="pages-nb-selector"
-                    className="ml-2 border p-1 rounded"
-                    value={itemsPerPage}
-                    onChange={(e) => {
-                        setItemsPerPage(Number(e.target.value));
-                    }}
-                >
-                    {[10, 25, 50, 100].map((size) => (
-                        <option key={size} value={size}>
-                            {size}
-                        </option>
-                    ))}
-                </select>
-            </label>
-            <label htmlFor="search-selector">
-                Search:
-                <input
-                    id="search-selector"
-                    className="ml-2 border p-1 rounded"
-                    type="text"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                />
-            </label>
+        <div className="search-filter-container">
+            <SelectField
+                id="pages-nb-selector"
+                label="Show:"
+                options={seize} 
+                value={String(itemsPerPage)}
+                onChange={(e) => setItemsPerPage(Number(e.target.value))}
+            />
+
+            <InputField
+                id="search-selector"
+                label="Search:"
+                type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+            />
         </div>
     );
 };

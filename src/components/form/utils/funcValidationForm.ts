@@ -1,4 +1,15 @@
 // Validation du nom (prénom ou nom de famille)
+export const validateStreet = (name: string): string => {
+    if (!name || name.length < 4) {
+        return "Minimum 4 caractères."; // Vérifie si le nom de la rue a moins de 4 caractères
+    }
+    const specialCharsRegExp = /[!@#$%^&*()?:{}|<>/\\\[\]`~_+;=<>]/;
+    if (specialCharsRegExp.test(name)) {
+        return "Caractères spéciaux interdits.";
+    }
+    return ""; // Si tout est correct, retourne une chaîne vide (aucune erreur)
+};
+
 export const validateName = (name: string): string => {
     const regexNumber = /[0-9]/;
     if (!name || name.length < 2) {
@@ -9,7 +20,6 @@ export const validateName = (name: string): string => {
     }
     return "";
 };
-
 // Validation de l'adresse email
 export const validateEmail = (email: string): string => {
     const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -60,11 +70,11 @@ export const validateStartDate = (
     startDateStr: string,
     birthDateStr: string
 ): string => {
-    if (!startDateStr) {
-        return "La date de début est requise.";
-    }
     if (!birthDateStr) {
         return "La date de naissance est requise.";
+    }
+    if (!startDateStr) {
+        return "La date de début est requise.";
     }
 
     const startDate = new Date(startDateStr);

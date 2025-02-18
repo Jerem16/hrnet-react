@@ -1,5 +1,6 @@
 import { ChangeEvent } from "react";
 import {
+    validateStreet,
     validateName,
     validateBirthDate,
     validateZipCode,
@@ -20,14 +21,12 @@ export const initialFormData: FormData = {
     department: "",
 };
 
-
 export const capitalizeText = (text: string): string =>
     text
         .toLowerCase()
         .split(" ")
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
-
 
 export const validateForm = (formData: FormData): { [key: string]: string } => {
     return {
@@ -36,10 +35,8 @@ export const validateForm = (formData: FormData): { [key: string]: string } => {
         dateOfBirth:
             isNotEmpty(formData.dateOfBirth, "Date de naissance") ||
             validateBirthDate(formData.dateOfBirth),
-        startDate:
-            isNotEmpty(formData.startDate, "Date de début") ||
-            validateStartDate(formData.startDate, formData.dateOfBirth),
-        street: isNotEmpty(formData.street, "Rue"),
+        startDate: validateStartDate(formData.startDate, formData.dateOfBirth),
+        street: validateStreet(formData.street),
         city: validateName(formData.city),
         state: isNotEmpty(formData.state, "État"),
         zipCode: validateZipCode(formData.zipCode, "Code postal"),
@@ -68,7 +65,7 @@ export const validateEachInput = (
             error = validateStartDate(value, formData.dateOfBirth);
             break;
         case "street":
-            error = isNotEmpty(value, "Rue");
+            error = validateStreet(value);
             break;
         case "city":
             error = validateName(value);

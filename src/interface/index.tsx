@@ -14,25 +14,28 @@ export interface FormData {
 
 export interface InputFieldProps {
     label: string;
-    id: keyof FormData;
+    id: string;
     error?: string;
     type?: string;
     value: string;
-    minLength: number;
+    minLength?: number;
+    disabled?: boolean;
     onChange: (e: ChangeEvent<HTMLInputElement>) => void;
 }
 export interface SelectOption {
-    name: string;
-    value: string;
+    seize?: number;
+    name?: string;
+    value: string | number;
     abbreviation?: string;
 }
 
 export interface SelectFieldProps {
     label: string;
-    id: keyof FormData;
+    id: string;
+    type?: string;
     options: SelectOption[]; // 🔥 Accepte un tableau d'objets
     value: string;
-    placeholder: string;
+    placeholder?: string;
     onChange: (e: ChangeEvent<HTMLSelectElement>) => void;
 }
 

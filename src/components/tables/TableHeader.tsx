@@ -26,34 +26,36 @@ const TableHeader: React.FC<TableHeaderProps> = ({
 }) => {
     return (
         <thead>
-            <tr className="bg-gray-300 text-gray-700 text-sm">
+            <tr className="table-header-row">
                 {Object.keys(columnHeaders).map((column) => (
                     <th
                         key={column}
-                        className="border p-2 text-left cursor-pointer hover:bg-gray-200"
+                        className="table-header-cell"
                         onClick={() => onSort(column as keyof Employee)}
+                        tabIndex={0}
+                        onKeyDown={() => onSort(column as keyof Employee)}
                     >
-                        <div className="flex justify-between items-center gap-2">
-                            <span className="text-gray-800">
+                        <div className="table-header-content">
+                            <span className="column-name">
                                 {columnHeaders[column as keyof Employee]}
                             </span>
-                            <div className="flex flex-col leading-none">
+                            <div className="sort-indicator">
                                 <span
-                                    className={`text-xs ${
+                                    className={`sort-icon ${
                                         sortColumn === column &&
                                         sortOrder === "asc"
-                                            ? "text-black font-bold"
-                                            : "text-gray-500"
+                                            ? "sort-asc"
+                                            : "sort-inactive"
                                     }`}
                                 >
                                     ▲
                                 </span>
                                 <span
-                                    className={`text-xs ${
+                                    className={`sort-icon ${
                                         sortColumn === column &&
                                         sortOrder === "desc"
-                                            ? "text-black font-bold"
-                                            : "text-gray-500"
+                                            ? "sort-desc"
+                                            : "sort-inactive"
                                     }`}
                                 >
                                     ▼

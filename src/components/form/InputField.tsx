@@ -1,6 +1,6 @@
 import React from "react";
 import { InputFieldProps } from "../../interface";
-
+import InfoSvg from "./Info";
 const FIELD_TYPES = {
     TEXT: "text",
     NUMBER: "number",
@@ -13,13 +13,26 @@ const InputField: React.FC<InputFieldProps & { error?: string }> = ({
     value,
     onChange,
     error,
+    disabled,
 }) => {
-    const isValid = error === ""; // Valide si pas d'erreur
+    const isValid = error === "";
 
     return (
-        <div className="flex flex-col mb-4">
-            <label htmlFor={id} className="font-semibold text-left mb-2">
-                {label} {error && <span className="text-red-500">*</span>}
+        <div className="field-container">
+            <label
+                htmlFor={id}
+                className={`field-label ${disabled ? "disabled" : ""}`}
+            >
+                {disabled && !value && (
+                    <div className="info">
+                        <p className="input-field-disabled">
+                            <InfoSvg className="info-icon" />
+                            Avant de remplir ce champ, vous devez indiquer la
+                            date de naissance.
+                        </p>
+                    </div>
+                )}
+                {label} {error && <span className="error-indicator">*</span>}{" "}
             </label>
             <input
                 type={type}
@@ -27,13 +40,12 @@ const InputField: React.FC<InputFieldProps & { error?: string }> = ({
                 value={value}
                 onChange={onChange}
                 autoComplete="on"
-                className={`w-full p-2 border rounded ${
-                    isValid ? "border-green-500" : ""
-                } ${error ? "border-red-500" : ""}`}
+                disabled={disabled}
+                className={`input-field ${isValid ? "valid" : ""}  ${
+                    disabled ? "disabled" : ""
+                } ${error ? "error" : ""}`}
             />
-            {error && (
-                <p className="text-red-500 text-sm mt-1 text-left">{error}</p>
-            )}
+            {error && <p className="input-field-error">{error}</p>}
         </div>
     );
 };

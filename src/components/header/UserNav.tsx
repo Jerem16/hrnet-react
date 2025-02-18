@@ -9,10 +9,7 @@ interface UserNavProps {
 const UserNav: React.FC<UserNavProps> = ({ to, text }) => {
     return (
         <div>
-            <Link
-                to={to}
-                className="text-white hover:text-green-400 transition duration-300"
-            >
+            <Link to={to} className="user-nav-link">
                 {text}
             </Link>
         </div>

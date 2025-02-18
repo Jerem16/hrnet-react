@@ -3,7 +3,7 @@ import AddEmployees from "../pages/AddEmployees";
 import PageEmployees from "../pages/PageEmployees";
 import Error404 from "../pages/ErrorPages/Error404";
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
+
 const App: React.FC = () => {
     return (
         <Routes>

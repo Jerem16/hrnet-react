@@ -12,19 +12,19 @@ const Pagination: React.FC<PaginationProps> = ({
     onPageChange,
 }) => {
     return (
-        <div className="flex justify-between items-center mt-4">
+        <div className="pagination-container">
             <button
-                className="border px-4 py-1 rounded disabled:opacity-50"
+                className="pagination-button"
                 disabled={currentPage === 1}
                 onClick={() => onPageChange(currentPage - 1)}
             >
                 Previous
             </button>
-            <span>
+            <span className="pagination-text">
                 Page {currentPage} of {totalPages}
             </span>
             <button
-                className="border px-4 py-1 rounded disabled:opacity-50"
+                className="pagination-button"
                 disabled={currentPage === totalPages}
                 onClick={() => onPageChange(currentPage + 1)}
             >

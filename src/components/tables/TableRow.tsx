@@ -7,28 +7,16 @@ interface TableRowProps {
 
 const TableRow: React.FC<TableRowProps> = ({ employee }) => {
     return (
-        <tr className="border-b bg-gray-100 text-gray-700 hover:bg-gray-200">
-            <td className="border p-2 whitespace-nowrap">
-                {employee.firstName}
-            </td>
-            <td className="border p-2 whitespace-nowrap">
-                {employee.lastName}
-            </td>
-            <td className="border p-2 whitespace-nowrap">
-                {formatDate(employee.dateOfBirth)}
-            </td>
-            <td className="border p-2 whitespace-nowrap">{employee.street}</td>
-            <td className="border p-2 whitespace-nowrap">
-                {employee.zipCode}
-            </td>
-            <td className="border p-2 whitespace-nowrap">{employee.city}</td>
-            <td className="border p-2 whitespace-nowrap">{employee.state}</td>
-            <td className="border p-2 whitespace-nowrap">
-                {employee.department}
-            </td>
-            <td className="border p-2 whitespace-nowrap">
-                {formatDate(employee.startDate)}
-            </td>
+        <tr className="table-row">
+            <td className="table-cell">{employee.firstName}</td>
+            <td className="table-cell">{employee.lastName}</td>
+            <td className="table-cell">{formatDate(employee.dateOfBirth)}</td>
+            <td className="table-cell">{employee.street}</td>
+            <td className="table-cell">{employee.zipCode}</td>
+            <td className="table-cell">{employee.city}</td>
+            <td className="table-cell">{employee.state}</td>
+            <td className="table-cell">{employee.department}</td>
+            <td className="table-cell">{formatDate(employee.startDate)}</td>
         </tr>
     );
 };

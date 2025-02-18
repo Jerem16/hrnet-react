@@ -23,8 +23,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
     onChange,
 }) => {
     return (
-        <fieldset className="border p-4 rounded mb-4">
-            <legend className="font-semibold">Address</legend>
+        <fieldset className="form-section">
+            <legend className="form-label">Address</legend>
             <InputField
                 label="Street"
                 id="street"

@@ -15,6 +15,7 @@ import { addEmployee, Employee } from "../../redux/store/employeeSlice";
 //? NPM MODAL */
 import Modal from "react-modal-component-by-jeremy";
 
+
 const EmployeeForm: React.FC = () => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -54,8 +55,8 @@ const EmployeeForm: React.FC = () => {
         setErrors({});
     };
     return (
-        <main className="container mx-auto p-4 max-w-lg border rounded shadow-md">
-            <h2 className="text-xl font-bold mb-4">Create Employee</h2>
+        <main className="main-container">
+            <h2 className="main-heading">Create Employee</h2>
             <form onSubmit={handleSubmit}>
                 <PersonalInfoForm
                     formData={formData}
@@ -68,15 +69,14 @@ const EmployeeForm: React.FC = () => {
                     onChange={handleChange}
                 />
                 <DepartmentForm
+                    formData={formData}
                     department={formData.department}
                     error={errors.department}
+                    errors={errors}
                     onChange={handleChange}
                 />
 
-                <button
-                    type="submit"
-                    className="bg-blue-500 text-white px-4 py-2 rounded"
-                >
+                <button type="submit" className="button-primary">
                     Save
                 </button>
             </form>
@@ -84,8 +84,7 @@ const EmployeeForm: React.FC = () => {
                 isOpen={isModalOpen}
                 onClose={() => setIsModalOpen(false)}
                 title="Succès"
-                type="info"
-                // Type de modale ("success", "error", "info").
+                type="success"
             >
                 <p>L’employé a été ajouté avec succès.</p>
             </Modal>
