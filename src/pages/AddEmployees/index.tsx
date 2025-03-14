@@ -4,7 +4,7 @@ import Header from "../../components/header/Header";
 function AddEmployees() {
     return (
         <>
-            <Header to={"/employee-list"} text={"Current Employees"} />
+            <Header to={"/employee"} text={"Current Employees"} />
             <EmployeeForm />
         </>
     );

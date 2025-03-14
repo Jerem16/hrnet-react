@@ -5,7 +5,7 @@ import { Employee } from "../../redux/store/employeeSlice";
 import SearchAndFilter from "./SearchAndFilter";
 import EmployeeTable from "./EmployeeTable";
 import Pagination from "./Pagination";
-import { employees as Employees } from "../../assets/data/employees";
+// import { employees as Employees } from "../../assets/data/employees";
 import {
     sortEmployees,
     filterEmployees,
@@ -15,8 +15,8 @@ import {
 import Modal from "react-modal-component-by-jeremy";
 
 const EmployeeList: React.FC = () => {
-    // const employees = useSelector((state: RootState) => state.employees);
-    const employees = Employees;
+    const employees = useSelector((state: RootState) => state.employees);
+    // const employees = Employees;
     const [isModalOpen, setIsModalOpen] = useState(true);
 
     const [searchTerm, setSearchTerm] = useState("");
