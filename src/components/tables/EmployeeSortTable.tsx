@@ -14,28 +14,36 @@ import {
 } from "./utils/employees";
 import Modal from "react-modal-component-by-jeremy";
 
-const EmployeeList: React.FC = () => {
-    const employeesFromState = useSelector(
+const EmployeeSortTable: React.FC = () => {
+    const employeesFromState: Employee[] = useSelector(
         (state: RootState) => state.employees
     );
-    const employees =
+    const employees: Employee[] =
         employeesFromState.length > 0 ? employeesFromState : Employees;
-    const [isModalOpen, setIsModalOpen] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(true);
 
-    const [searchTerm, setSearchTerm] = useState("");
-    const [itemsPerPage, setItemsPerPage] = useState(10);
-    const [currentPage, setCurrentPage] = useState(1);
+    const [searchTerm, setSearchTerm] = useState<string>("");
+    const [itemsPerPage, setItemsPerPage] = useState<number>(10);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [sortColumn, setSortColumn] = useState<keyof Employee | null>(null);
     const [sortOrder, setSortOrder] = useState<"asc" | "desc">("asc");
 
-    const sortedEmployees = sortEmployees(employees, sortColumn, sortOrder);
-    const filteredEmployees = filterEmployees(sortedEmployees, searchTerm);
-    const paginatedEmployees = paginateEmployees(
+    const sortedEmployees: Employee[] = sortEmployees(
+        employees,
+        sortColumn,
+        sortOrder
+    );
+    const filteredEmployees: Employee[] = filterEmployees(
+        sortedEmployees,
+        searchTerm
+    );
+    const paginatedEmployees: Employee[] = paginateEmployees(
         filteredEmployees,
         currentPage,
         itemsPerPage
     );
-    const totalPages = getTotalPages(filteredEmployees, itemsPerPage);
+    const totalPages: number = getTotalPages(filteredEmployees, itemsPerPage);
+
     useEffect(() => {
         if (filteredEmployees.length <= itemsPerPage) {
             setCurrentPage(1);
@@ -83,4 +91,4 @@ const EmployeeList: React.FC = () => {
     );
 };
 
-export default EmployeeList;
+export default EmployeeSortTable;

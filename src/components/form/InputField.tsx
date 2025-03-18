@@ -1,6 +1,6 @@
 import React from "react";
 import { InputFieldProps } from "../../interface";
-import InfoSvg from "./Info";
+import IcoInfoSvg from "./Info";
 const FIELD_TYPES = {
     TEXT: "text",
     NUMBER: "number",
@@ -26,7 +26,7 @@ const InputField: React.FC<InputFieldProps & { error?: string }> = ({
                 {disabled && !value && (
                     <div className="info">
                         <p className="input-field-disabled">
-                            <InfoSvg className="info-icon" />
+                            <IcoInfoSvg className="info-icon" />
                             Avant de remplir ce champ, vous devez indiquer la
                             date de naissance.
                         </p>

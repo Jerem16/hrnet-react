@@ -19,8 +19,8 @@ Ce projet a pour but de migrer HRnet vers React afin d'améliorer sa stabilité,
 -   **Framework :** React avec Vite
 -   **Gestion d'état :** Context API / Redux
 -   **Styles :** CSS Modules, TailwindCSS ou Styled Components
--   **Tests :** Jest & React Testing Library
 -   **Performance :** Audits avec Lighthouse
+-   **Tests :** tests de performance Lighthouse en comparant l'ancienne et la nouvelle application.
 -   **Déploiement :** GitHub Pages ou AWS Amplify
 
 ## 📌 Installation
@@ -28,7 +28,7 @@ Ce projet a pour but de migrer HRnet vers React afin d'améliorer sa stabilité,
 1️⃣ **Cloner le projet**
 
 ```bash
-git clone https://github.com/ton-utilisateur/hrnet-react.git
+git clone https://github.com/Jerem16/hrnet-react.git
 cd hrnet-react
 ```
 
@@ -61,6 +61,19 @@ Fenêtre modale → Composant React personnalisé
 Menus déroulants → Remplacement par un composant React natif
 
     Tableau des employés → Optimisation du rendu
+
+## Développé avec :
+
+-   [Visual Studio Code](https://code.visualstudio.com/) - Éditeur de texte
+-   [Sass](https://sass-lang.com/) - Préprocesseur CSS
+-   [React 19](https://fr.reactjs.org/) - Bibliothèque JavaScript libre développée par Facebook
+-   [Vite](https://vite.dev/) - Boîte à outils référence pour initier un projet React
+-   [React Router V6](https://reactrouter.com/) - Bibliothèque de routage pour React
+-   [Typescript](https://www.typescriptlang.org/) - Un package utilisé pour documenter les types de propriétés prévus transmises aux composants React
+-   [Redux](https://redux.js.org/) - Bibliothèque JS de gestion d'état pour applications web
+-   [GitHub](https://github.com/) - Outil de gestion de versions
+-   [GitHub Pages](https://pages.github.com/) - Outil d’hébergement
+
 
 📊 Tests de performance
 

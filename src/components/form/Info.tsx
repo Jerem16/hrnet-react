@@ -1,10 +1,10 @@
 import React from "react";
 
-interface InfoSvgProps {
+interface IcoInfoSvgProps {
     className?: string;
 }
 
-const InfoSvg: React.FC<InfoSvgProps> = ({ className }) => {
+const IcoInfoSvg: React.FC<IcoInfoSvgProps> = ({ className }) => {
     return (
         <span className={`${className}`}>
             <svg
@@ -18,4 +18,4 @@ const InfoSvg: React.FC<InfoSvgProps> = ({ className }) => {
     );
 };
 
-export default React.memo(InfoSvg);
+export default React.memo(IcoInfoSvg);

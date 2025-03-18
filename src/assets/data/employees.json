@@ -1,0 +1,123 @@
+[
+    {
+        "firstName": "Jérémy",
+        "lastName": "Lemaignent",
+        "dateOfBirth": "1977-06-27",
+        "startDate": "2025-01-30",
+        "street": "69 Rue Maurice Tronelle",
+        "city": "Le Havre",
+        "state": "IN",
+        "zipCode": "76620",
+        "department": "Engineering"
+    },
+    {
+        "firstName": "Seda",
+        "lastName": "Abb",
+        "dateOfBirth": "2000-02-05",
+        "startDate": "2025-02-12",
+        "street": "69 Rue Maurice Tronelle",
+        "city": "Le Havre",
+        "state": "IL",
+        "zipCode": "76620",
+        "department": "Engineering"
+    },
+    {
+        "firstName": "Ali",
+        "lastName": "Zeb",
+        "dateOfBirth": "2022-06-27",
+        "startDate": "2025-01-30",
+        "street": "01 Rue Maurice Tronelle",
+        "city": "Paris",
+        "state": "AS",
+        "zipCode": "55620",
+        "department": "Engineering"
+    },
+    {
+        "firstName": "Estelle",
+        "lastName": "Abb",
+        "dateOfBirth": "2000-02-05",
+        "startDate": "2025-02-12",
+        "street": "69 Rue Maurice Tronelle",
+        "city": "Le Havre",
+        "state": "AL",
+        "zipCode": "00001",
+        "department": "Engineering"
+    },
+    {
+        "firstName": "Marc",
+        "lastName": "Dupont",
+        "dateOfBirth": "1985-11-15",
+        "startDate": "2023-07-01",
+        "street": "42 Avenue des Champs",
+        "city": "Lyon",
+        "state": "TX",
+        "zipCode": "69000",
+        "department": "Sales"
+    },
+    {
+        "firstName": "Léa",
+        "lastName": "Morel",
+        "dateOfBirth": "1993-09-08",
+        "startDate": "2024-03-22",
+        "street": "12 Boulevard Haussmann",
+        "city": "Paris",
+        "state": "CA",
+        "zipCode": "75009",
+        "department": "Marketing"
+    },
+    {
+        "firstName": "Tom",
+        "lastName": "Hanks",
+        "dateOfBirth": "1966-07-09",
+        "startDate": "2010-09-13",
+        "street": "98 Sunset Boulevard",
+        "city": "Los Angeles",
+        "state": "CA",
+        "zipCode": "90001",
+        "department": "HR"
+    },
+    {
+        "firstName": "Emma",
+        "lastName": "Watson",
+        "dateOfBirth": "1990-04-15",
+        "startDate": "2018-06-10",
+        "street": "14 Oxford street",
+        "city": "London",
+        "state": "UK",
+        "zipCode": "SW1A 1AA",
+        "department": "Finance"
+    },
+    {
+        "firstName": "David",
+        "lastName": "Beckham",
+        "dateOfBirth": "1975-05-02",
+        "startDate": "2015-01-20",
+        "street": "7 Manchester Avenue",
+        "city": "Manchester",
+        "state": "UK",
+        "zipCode": "M1 2WH",
+        "department": "Sports"
+    },
+    {
+        "firstName": "Sophia",
+        "lastName": "Loren",
+        "dateOfBirth": "1934-09-20",
+        "startDate": "1980-11-05",
+        "street": "10 Roma Piazza",
+        "city": "Rome",
+        "state": "IT",
+        "zipCode": "00100",
+        "department": "Arts"
+    },
+    {
+        "firstName": "Seda",
+        "lastName": "LEMAIGNENT",
+        "dateOfBirth": "03/13/2025",
+        "startDate": "03/06/2025",
+        "department": "Sales",
+        "street": "69 RUE MAURICE TRONELLE",
+        "city": "LE HAVRE",
+        "state": "AZ",
+        "zipCode": "76620"
+    }
+]

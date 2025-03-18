@@ -15,33 +15,39 @@ import { addEmployee, Employee } from "../../redux/store/employeeSlice";
 //? NPM MODAL */
 import Modal from "react-modal-component-by-jeremy";
 
+// Définition des erreurs sous forme d'objet dynamique
+interface FormErrors {
+    [key: string]: string;
+}
 
+// Composant EmployeeForm
 const EmployeeForm: React.FC = () => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [errors, setErrors] = useState<{ [key: string]: string }>({});
+    const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+    const [errors, setErrors] = useState<FormErrors>({});
     const [formData, setFormData] = useState<FormData>(initialFormData);
     const dispatch = useDispatch();
 
+    // Gestion des changements dans les champs du formulaire
     const handleChange = (
         e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => {
         const { id, value } = e.target;
         setFormData({ ...formData, [id]: value });
 
-        let error = validateEachInput(e, formData);
-
+        let error: string = validateEachInput(e, formData);
         setErrors({ ...errors, [id]: error });
     };
 
-    const handleSubmit = (e: FormEvent) => {
+    // Gestion de la soumission du formulaire
+    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        const validationErrors = validateForm(formData);
+        const validationErrors: FormErrors = validateForm(formData);
         setErrors(validationErrors);
 
         if (Object.values(validationErrors).some((error) => error !== ""))
             return;
 
-        const formattedData = {
+        const formattedData: Employee = {
             ...formData,
             firstName: capitalizeText(formData.firstName),
             lastName: capitalizeText(formData.lastName),
@@ -49,11 +55,12 @@ const EmployeeForm: React.FC = () => {
             city: capitalizeText(formData.city),
         };
 
-        dispatch(addEmployee(formattedData as Employee));
+        dispatch(addEmployee(formattedData));
         setIsModalOpen(true);
         setFormData(initialFormData);
         setErrors({});
     };
+
     return (
         <main className="main-container">
             <h2 className="main-heading">Create Employee</h2>

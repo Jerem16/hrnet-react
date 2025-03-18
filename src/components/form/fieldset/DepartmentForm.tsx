@@ -15,7 +15,6 @@ interface DepartmentFormProps {
     onChange: (
         e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
     ) => void;
-    disabled?: boolean; // ✅ Désormais optionnel
 }
 
 const DepartmentForm: React.FC<DepartmentFormProps> = ({
