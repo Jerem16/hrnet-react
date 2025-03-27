@@ -1,4 +1,8 @@
-// Validation du nom (prénom ou nom de famille)
+/**
+ * Valide un nom de rue.
+ * @param {string} name - Le nom de la rue à valider.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validateStreet = (name: string): string => {
     if (!name || name.length < 4) {
         return "Minimum 4 caractères."; // Vérifie si le nom de la rue a moins de 4 caractères
@@ -10,6 +14,11 @@ export const validateStreet = (name: string): string => {
     return ""; // Si tout est correct, retourne une chaîne vide (aucune erreur)
 };
 
+/**
+ * Valide un prénom ou un nom de famille.
+ * @param {string} name - Le prénom ou nom à valider.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validateName = (name: string): string => {
     const regexNumber = /[0-9]/;
     if (!name || name.length < 2) {
@@ -20,7 +29,12 @@ export const validateName = (name: string): string => {
     }
     return "";
 };
-// Validation de l'adresse email
+
+/**
+ * Valide une adresse email.
+ * @param {string} email - L'adresse email à valider.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validateEmail = (email: string): string => {
     const emailRegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!email || !emailRegExp.test(email)) {
@@ -29,7 +43,11 @@ export const validateEmail = (email: string): string => {
     return "";
 };
 
-// Validation de la date de naissance
+/**
+ * Valide une date de naissance (doit être valide et l'utilisateur doit avoir au moins 18 ans).
+ * @param {string} dateStr - La date de naissance en format YYYY-MM-DD.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validateBirthDate = (dateStr: string): string => {
     if (!dateStr) {
         return "La date de naissance est requise.";
@@ -65,7 +83,13 @@ export const validateBirthDate = (dateStr: string): string => {
 
     return "";
 };
-// Validation de la date de début
+
+/**
+ * Valide une date de début d'emploi (doit être après 18 ans de la date de naissance).
+ * @param {string} startDateStr - La date de début d'emploi.
+ * @param {string} birthDateStr - La date de naissance de l'employé.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validateStartDate = (
     startDateStr: string,
     birthDateStr: string
@@ -95,17 +119,26 @@ export const validateStartDate = (
     return "";
 };
 
+/**
+ * Valide un code postal (5 chiffres).
+ * @param {string} zip - Le code postal à valider.
+ * @param {string} fieldName - Nom du champ pour personnaliser le message d'erreur.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validateZipCode = (zip: string, fieldName: string): string => {
-    const regexNumber = /[0-9]/;
-    if (!zip) {
-        return `${fieldName} ne doit pas être vide.`;
-    }
+    if (!zip) return `${fieldName} ne doit pas être vide.`;
     return /^[0-9]{5}$/.test(zip)
         ? ""
         : "Le code postal doit contenir 5 chiffres.";
 };
 
-// Validation des nombres (par exemple pour les tournois)
+/**
+ * Valide un nombre dans une plage donnée.
+ * @param {number} value - La valeur numérique à valider.
+ * @param {number} [min=0] - Valeur minimale acceptée.
+ * @param {number} [max=99] - Valeur maximale acceptée.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validateNumberInput = (value: number, min = 0, max = 99) => {
     if (!value || isNaN(value) || value < min || value > max) {
         return `Value must be a number between ${min} and ${max}.`;
@@ -113,43 +146,56 @@ export const validateNumberInput = (value: number, min = 0, max = 99) => {
     return "";
 };
 
-// Validation des boutons radio
-export const validateRadio = (options) => {
-    const isChecked = options.some((option) => option.checked);
-    if (!isChecked) {
-        return "Please select an option.";
-    }
-    return "";
+/**
+ * Vérifie si au moins un bouton radio est sélectionné.
+ * @param {Array<{ checked: boolean }>} options - Liste des options radio.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
+export const validateRadio = (options: { checked: boolean }[]): string => {
+    return options.some((option) => option.checked)
+        ? ""
+        : "Veuillez sélectionner une option.";
 };
 
-// Validation des cases à cocher
-export const validateCheckbox = (isChecked) => {
-    if (!isChecked) {
-        return "You must agree to the terms and conditions.";
-    }
-    return "";
+/**
+ * Vérifie si une case à cocher est cochée.
+ * @param {boolean} isChecked - Indique si la case est cochée.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
+export const validateCheckbox = (isChecked: boolean): string => {
+    return isChecked ? "" : "Vous devez accepter les conditions.";
 };
 
-// Validation du mot de passe
+/**
+ * Valide un mot de passe (au moins 8 caractères avec lettres, chiffres et caractères spéciaux).
+ * @param {string} password - Le mot de passe à valider.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const validatePassword = (password: string): string => {
     const passwordRegExp = /^[a-zA-Z0-9!@#$%^&*_-]{8,}$/;
-    // Au moins 8 caractères avec des caractères spéciaux autorisés
-    if (!password || !passwordRegExp.test(password)) {
-        return "Password must be at least 8 characters long and include letters, numbers, and the following special characters: !@#$%^&*_-";
-    }
-    return ""; // Pas d'erreur
+    return password && passwordRegExp.test(password)
+        ? ""
+        : "Le mot de passe doit contenir au moins 8 caractères avec des lettres, chiffres et caractères spéciaux.";
 };
 
-// Validation des caractères alphanumériques pour le nom d'utilisateur
+/**
+ * Vérifie si une chaîne contient uniquement des caractères alphanumériques.
+ * @param {string} str - La chaîne à vérifier.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const isAlphanumeric = (str: string): string => {
-    const alphanumericRegExp = /^[a-zA-Z0-9]*$/; // Seulement des lettres et chiffres
-    if (!str || !alphanumericRegExp.test(str)) {
-        return "User Name can only contain alphanumeric characters.";
-    }
-    return ""; // Pas d'erreur
+    const alphanumericRegExp = /^[a-zA-Z0-9]*$/;
+    return str && alphanumericRegExp.test(str)
+        ? ""
+        : "Le nom d'utilisateur ne doit contenir que des lettres et des chiffres.";
 };
 
-// Fonction générique pour vérifier si un champ est vide
+/**
+ * Vérifie si un champ n'est pas vide.
+ * @param {string} value - La valeur du champ.
+ * @param {string} fieldName - Nom du champ pour personnaliser le message d'erreur.
+ * @returns {string} - Message d'erreur ou chaîne vide si valide.
+ */
 export const isNotEmpty = (value: string, fieldName: string): string => {
     return !value || value.length < 2
         ? `${fieldName} ne doit pas être vide.`

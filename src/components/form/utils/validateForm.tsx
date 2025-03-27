@@ -6,9 +6,13 @@ import {
     validateZipCode,
     isNotEmpty,
     validateStartDate,
-} from "./funcValidationForm";
-import { FormData } from "../../../interface";
+} from "./funcValidationForm"; // Import des fonctions de validation
+import { FormData } from "../../../interface"; // Import de l'interface des données du formulaire
 
+/**
+ * Objet contenant les valeurs initiales du formulaire.
+ * Chaque champ est initialisé avec une chaîne vide.
+ */
 export const initialFormData: FormData = {
     firstName: "",
     lastName: "",
@@ -21,6 +25,13 @@ export const initialFormData: FormData = {
     department: "",
 };
 
+/**
+ * Fonction utilitaire pour capitaliser chaque mot d'une chaîne de caractères.
+ * Ex: "jean dupont" -> "Jean Dupont"
+ *
+ * @param {string} text - Texte à transformer
+ * @returns {string} - Texte transformé avec la première lettre de chaque mot en majuscule
+ */
 export const capitalizeText = (text: string): string =>
     text
         .toLowerCase()
@@ -28,6 +39,12 @@ export const capitalizeText = (text: string): string =>
         .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
         .join(" ");
 
+/**
+ * Valide l'ensemble des champs du formulaire en utilisant les fonctions de validation.
+ *
+ * @param {FormData} formData - Données actuelles du formulaire
+ * @returns {Object} - Un objet contenant les messages d'erreur pour chaque champ invalide
+ */
 export const validateForm = (formData: FormData): { [key: string]: string } => {
     return {
         firstName: validateName(formData.firstName),
@@ -44,6 +61,13 @@ export const validateForm = (formData: FormData): { [key: string]: string } => {
     };
 };
 
+/**
+ * Valide un champ individuel lorsqu'il est modifié.
+ *
+ * @param {ChangeEvent<HTMLInputElement | HTMLSelectElement>} e - Événement de changement sur un champ de saisie ou de sélection
+ * @param {FormData} formData - Données actuelles du formulaire
+ * @returns {string} - Message d'erreur si la validation échoue, sinon une chaîne vide
+ */
 export const validateEachInput = (
     e: ChangeEvent<HTMLInputElement | HTMLSelectElement>,
     formData: FormData

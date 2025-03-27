@@ -4,27 +4,35 @@ import SelectField from "../SelectField";
 import { states } from "../../../assets/data/dataOptions";
 import { capitalizeText } from "../utils/validateForm";
 
+/**
+ * Interface représentant les propriétés du formulaire d'adresse.
+ */
 interface AddressFormProps {
+    /** Données du formulaire contenant les champs d'adresse */
     formData: {
         street: string;
         city: string;
         state: string;
         zipCode: string;
     };
+    /** Objet contenant les erreurs associées à chaque champ */
     errors: { [key: string]: string };
-    onChange: (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => void;
+    /** Fonction de gestion des changements de valeur dans les champs */
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
 }
 
-const AddressForm: React.FC<AddressFormProps> = ({
-    formData,
-    errors,
-    onChange,
-}) => {
+/**
+ * Composant représentant un formulaire d'adresse.
+ *
+ * @param {AddressFormProps} props - Propriétés du composant.
+ * @returns {JSX.Element} - Le formulaire d'adresse.
+ */
+const AddressForm: React.FC<AddressFormProps> = ({ formData, errors, onChange }) => {
     return (
         <fieldset className="form-section">
             <legend className="form-label">Address</legend>
+
+            {/* Champ pour la rue */}
             <InputField
                 label="Street"
                 id="street"
@@ -33,6 +41,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 onChange={onChange}
                 error={errors.street}
             />
+
+            {/* Champ pour la ville */}
             <InputField
                 label="City"
                 id="city"
@@ -42,6 +52,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 onChange={onChange}
                 error={errors.city}
             />
+
+            {/* Sélecteur d'état */}
             <SelectField
                 label="State"
                 id="state"
@@ -54,6 +66,8 @@ const AddressForm: React.FC<AddressFormProps> = ({
                 onChange={onChange}
                 error={errors.state}
             />
+
+            {/* Champ pour le code postal */}
             <InputField
                 label="Zip Code"
                 id="zipCode"
