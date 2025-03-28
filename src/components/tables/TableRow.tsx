@@ -20,15 +20,33 @@ interface TableRowProps {
 const TableRow: React.FC<TableRowProps> = ({ employee }) => {
     return (
         <tr className="table-row">
-            <td className="table-cell">{employee.firstName}</td>
-            <td className="table-cell">{employee.lastName}</td>
-            <td className="table-cell">{formatDate(employee.dateOfBirth)}</td>
-            <td className="table-cell">{employee.street}</td>
-            <td className="table-cell">{employee.zipCode}</td>
-            <td className="table-cell">{employee.city}</td>
-            <td className="table-cell">{employee.state}</td>
-            <td className="table-cell">{employee.department}</td>
-            <td className="table-cell">{formatDate(employee.startDate)}</td>
+            <td className="table-cell">
+                <span>{employee.firstName}</span>
+            </td>
+            <td className="table-cell">
+                <span>{employee.lastName}</span>
+            </td>
+            <td className="table-cell">
+                <span>{formatDate(employee.dateOfBirth)}</span>
+            </td>
+            <td className="table-cell">
+                <span className="street">{employee.street}</span>
+            </td>
+            <td className="table-cell">
+                <span>{employee.zipCode}</span>
+            </td>
+            <td className="table-cell">
+                <span>{employee.city}</span>
+            </td>
+            <td className="table-cell">
+                <span>{employee.state}</span>
+            </td>
+            <td className="table-cell">
+                <span>{employee.department}</span>
+            </td>
+            <td className="table-cell">
+                <span>{formatDate(employee.startDate)}</span>
+            </td>
         </tr>
     );
 };

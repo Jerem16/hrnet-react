@@ -5,7 +5,7 @@ import { Employee } from "../../redux/store/employeeSlice";
  * Propriétés du composant TableHeader.
  * @interface TableHeaderProps
  * @property {keyof Employee | null} sortColumn - Référence la colonne utilisée pour trier les données du tableau.
- * 
+ *
  * - Si une colonne est sélectionnée pour le tri, `sortColumn` contient son nom (ex. `"firstName"`, `"city"`, etc.).
  * - Si aucune colonne n'est triée ou s'il n'y a aucune donnée à afficher, sa valeur est `null`.
  * - Lorsqu'un utilisateur clique sur l'en-tête d'une colonne :
@@ -13,7 +13,7 @@ import { Employee } from "../../redux/store/employeeSlice";
  *   - Si elle était déjà triée, l'ordre (`sortOrder`) est inversé (`"asc"` ↔ `"desc"`).
  *   - Si c'est une nouvelle colonne, le tri commence en mode `"asc"`.
  * - Utilisé pour afficher dynamiquement l'indicateur de tri (flèche ▲ ou ▼) via des classes CSS.
- * 
+ *
  * @property {"asc" | "desc"} sortOrder - L'ordre de tri actuel : `"asc"` pour ascendant, `"desc"` pour descendant.
  * @property {Function} onSort - Fonction déclenchée au clic sur un en-tête de colonne pour trier les données.
  */
@@ -59,7 +59,7 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                 {Object.keys(columnHeaders).map((column) => (
                     <th
                         key={column}
-                        className="table-header-cell"
+                        className={`table-header-cell ${column}`}
                         onClick={() => onSort(column as keyof Employee)}
                         tabIndex={0}
                         onKeyDown={() => onSort(column as keyof Employee)}
@@ -72,9 +72,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                                 <span
                                     className={`sort-icon ${
                                         sortColumn === column &&
-                                        sortOrder === "asc"
-                                            ? "sort-asc"
-                                            : "sort-inactive"
+                                        sortOrder !== "asc"
+                                            ? "sort-active"
+                                            : "sort-asc"
                                     }`}
                                 >
                                     ▲
@@ -82,9 +82,9 @@ const TableHeader: React.FC<TableHeaderProps> = ({
                                 <span
                                     className={`sort-icon ${
                                         sortColumn === column &&
-                                        sortOrder === "desc"
-                                            ? "sort-desc"
-                                            : "sort-inactive"
+                                        sortOrder !== "desc"
+                                            ? "sort-active"
+                                            : "sort-desc"
                                     }`}
                                 >
                                     ▼

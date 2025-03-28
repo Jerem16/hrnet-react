@@ -70,12 +70,13 @@ export const sortEmployees = (
  *  @returns {Employee[]} - La liste filtrée des employés.
  */
 export const filterEmployees = (employees: Employee[], searchTerm: string) => {
+    if (!searchTerm.trim()) return employees;
     return employees.filter((employee) =>
         Object.values(employee).some((value) => {
-            if (typeof value === "string") {
+            if (typeof value === "string" && value) {
                 return (
-                    value.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                    formatDate(value).includes(searchTerm)
+                    value.toLowerCase().includes(searchTerm.toLowerCase()) &&
+                    value[0]?.toLowerCase() === searchTerm[0]?.toLowerCase()
                 );
             } else if (typeof value === "number") {
                 return value.toString().includes(searchTerm);
