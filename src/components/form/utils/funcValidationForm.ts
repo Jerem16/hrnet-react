@@ -56,7 +56,7 @@ export const validateBirthDate = (dateStr: string): string => {
     const currentDate = new Date();
     const birthDate = new Date(dateStr);
 
-    // Vérifier si la date est invalide
+    // Vérifie si la date est invalide
     if (isNaN(birthDate.getTime())) {
         return "Date de naissance invalide.";
     }

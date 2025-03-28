@@ -3,7 +3,7 @@ import InputField from "../InputField";
 import { capitalizeText } from "../utils/validateForm";
 
 /**
- * Interface représentant les propriétés du formulaire des informations personnelles.
+ * Interface formulaire section informations personnelles.
  */
 interface PersonalInfoFormProps {
     /** Données du formulaire contenant le prénom, nom, date de naissance et date de début */

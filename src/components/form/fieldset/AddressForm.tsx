@@ -5,7 +5,7 @@ import { states } from "../../../assets/data/dataOptions";
 import { capitalizeText } from "../utils/validateForm";
 
 /**
- * Interface représentant les propriétés du formulaire d'adresse.
+ * Interface formulaire section adresse.
  */
 interface AddressFormProps {
     /** Données du formulaire contenant les champs d'adresse */
@@ -18,7 +18,9 @@ interface AddressFormProps {
     /** Objet contenant les erreurs associées à chaque champ */
     errors: { [key: string]: string };
     /** Fonction de gestion des changements de valeur dans les champs */
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => void;
+    onChange: (
+        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    ) => void;
 }
 
 /**
@@ -27,7 +29,11 @@ interface AddressFormProps {
  * @param {AddressFormProps} props - Propriétés du composant.
  * @returns {JSX.Element} - Le formulaire d'adresse.
  */
-const AddressForm: React.FC<AddressFormProps> = ({ formData, errors, onChange }) => {
+const AddressForm: React.FC<AddressFormProps> = ({
+    formData,
+    errors,
+    onChange,
+}) => {
     return (
         <fieldset className="form-section">
             <legend className="form-label">Address</legend>

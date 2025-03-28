@@ -5,7 +5,7 @@ import { departments } from "../../../assets/data/dataOptions";
 import { capitalizeText } from "../utils/validateForm";
 
 /**
- * Interface représentant les propriétés du formulaire des informations professionnelles.
+ * Interface formulaire section informations professionnelles.
  */
 interface DepartmentFormProps {
     /** Données du formulaire contenant la date de début et la date de naissance */
